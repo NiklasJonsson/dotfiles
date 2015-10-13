@@ -1,0 +1,34 @@
+" Plugin handler
+execute pathogen#infect() 
+
+" For accessing tagbar
+nmap <F8> :TagbarToggle<CR>
+
+" Solarized init only if gui
+if has('gui_running') 
+	syntax enable
+	set background=dark
+	colorscheme solarized
+endif
+" Remaps split navigation keys
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+
+
+set autoindent			" For autoindenting after a newline
+
+set showcmd			" Shows what you are typing as a command
+
+set mouse=a			" Enable mouse in terminal
+
+set number			" Numbered lines
+
+set relativenumber		" Set all line numbers relative to current
+
+filetype on			" Customize depending on filetype
+filetype indent on
+filetype plugin on
+
+set scrolloff=5			" No longer need to place cursor att bottom to scroll
