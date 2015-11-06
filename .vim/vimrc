@@ -1,8 +1,30 @@
 " Plugin handler
-execute pathogen#infect() 
+execute pathogen#infect()
+
+" Customize depending on filetype
+filetype on		
+filetype indent on
+filetype plugin on
 
 " For accessing tagbar
 nmap <F8> :TagbarToggle<CR>
+
+" Rebinds k and j to count wrapped lines as new lines but still work with a motion in front
+nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
+nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
+nmap <Up> k
+nmap <Down> j
+
+" DOESNT WORK YET For when forgetting to open file with sudo, save with w!!
+" cmap w!! :w !sudo tee > /dev/null %
+
+" Vim-airline statusbar
+set laststatus=2
+let g:airline_powerline_fonts = 1
+set noshowmode
+set timeoutlen=100
+set t_Co=256
+let g:solarized_termcolors=256
 
 " Solarized init only if gui
 if has('gui_running') 
@@ -10,6 +32,7 @@ if has('gui_running')
 	set background=dark
 	colorscheme solarized
 endif
+
 " Remaps split navigation keys
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -17,18 +40,11 @@ nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
 
 
-set autoindent			" For autoindenting after a newline
-
-set showcmd			" Shows what you are typing as a command
-
-set mouse=a			" Enable mouse in terminal
-
-set number			" Numbered lines
-
-set relativenumber		" Set all line numbers relative to current
-
-filetype on			" Customize depending on filetype
-filetype indent on
-filetype plugin on
-
-set scrolloff=5			" No longer need to place cursor att bottom to scroll
+set incsearch		" find the next match as we type the search
+set ignorecase		" set search to be case insensitive 
+set smartcase		" unless you typed uppercase letters in your query"
+set autoindent		" For autoindenting after a newline
+set showcmd		" Shows what you are typing as a command
+set mouse=a		" Enable mouse in terminal
+set number		" Numbered lines
+set scrolloff=5		" No longer need to place cursor att bottom to scroll
