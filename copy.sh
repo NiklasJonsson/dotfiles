@@ -1,7 +1,7 @@
 #!/bin/bash
-echo "copying bash*, vim*, gitonfig"
-cp -r ../.bash_aliases .
-cp -r ../.bashrc .
+echo "copying from home ..."
+cp ../.bash_aliases .
+cp ../.bashrc .
 cp -r ../.vim* .
 cp ../.gitconfig .
 rm .viminfo
