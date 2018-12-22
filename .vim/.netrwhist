@@ -1,8 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/home/niklas/kernel_source/linux-4.5.2/Documentation'
-let g:netrw_dirhist_2='/home/niklas/school/edaf35/lab2'
-let g:netrw_dirhist_3='/etc/X11/xorg.conf.d'
-let g:netrw_dirhist_4='/home/niklas/school/eda221/project/build/src/EDA221_Assignment1/CMakeFiles'
-let g:netrw_dirhist_5='/usr/share/X11/xkb/symbols'
-let g:netrw_dirhist_6='/home/niklas/git'
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/home/niklas/src/Thrive/ThirdParty'
+let g:netrw_dirhist_2='/home/niklas/src/Thrive/ThirdParty/Leviathan'
+let g:netrw_dirhist_3='/home/niklas/dotfiles/.vim/bundle'
