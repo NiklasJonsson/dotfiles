@@ -6,24 +6,6 @@ nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 nmap <Up> k
 nmap <Down> j
 
-" DOESNT WORK YET For when forgetting to open file with sudo, save with w!!
-" cmap w!! :w !sudo tee > /dev/null %
-
-" Vim-airline statusbar
-set laststatus=2
-let g:airline_powerline_fonts = 1
-set noshowmode
-set timeoutlen=100
-set t_Co=256
-let g:solarized_termcolors=256
-
-" Solarized init only if gui
-if has('gui_running') 
-	syntax enable
-	set background=dark
-	colorscheme solarized
-endif
-
 " Remaps split navigation keys
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -37,8 +19,8 @@ set softtabstop=4               "Insert 4 spaces when tab is pressed
 set shiftwidth=4                "An indent is 4 spaces
 set shiftround                  "Round indent to nearest shiftwidth multiple
 
-" let mapleader = ","
-" nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+let mapleader = ","
+nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 
 set pastetoggle=<F2>
 
@@ -46,9 +28,9 @@ set incsearch		" find the next match as we type the search
 set ignorecase		" set search to be case insensitive 
 set smartcase		" unless you typed uppercase letters in your query"
 set autoindent		" For autoindenting after a newline
-set showcmd		" Shows what you are typing as a command
-set mouse=a		" Enable mouse in terminal
-set number		" Numbered lines
+set showcmd			" Shows what you are typing as a command
+set mouse=a			" Enable mouse in terminal
+set number			" Numbered lines
 set scrolloff=5		" No longer need to place cursor att bottom to scroll
 
 call plug#begin('~/.vim/plugged')
@@ -58,4 +40,8 @@ Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
+" Vim-airline statusbar
+set laststatus=2
+set noshowmode
+set timeoutlen=100
 let g:airline_powerline_fonts = 1
