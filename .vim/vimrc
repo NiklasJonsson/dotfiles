@@ -6,11 +6,19 @@ nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 nmap <Up> k
 nmap <Down> j
 
+" Don't move cursor when exiting insert mode (unless necessary)
+let CursorColumnI = 0 "the cursor column position in INSERT
+autocmd InsertEnter * let CursorColumnI = col('.')
+autocmd CursorMovedI * let CursorColumnI = col('.')
+autocmd InsertLeave * if col('.') != CursorColumnI | call cursor(0, col('.')+1) | endif
+
 " Remaps split navigation keys
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
+
+let mapleader = ","
 
 " Tab specific option
 set tabstop=4                  "A tab is 8 spaces
@@ -18,9 +26,6 @@ set tabstop=4                  "A tab is 8 spaces
 set softtabstop=4               "Insert 4 spaces when tab is pressed
 set shiftwidth=4                "An indent is 4 spaces
 set shiftround                  "Round indent to nearest shiftwidth multiple
-
-let mapleader = ","
-nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 
 set pastetoggle=<F2>
 
@@ -37,6 +42,8 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'airblade/vim-gitgutter'
+Plug 'rust-lang/rust.vim'
 
 call plug#end()
 
