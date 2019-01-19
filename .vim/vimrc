@@ -1,5 +1,43 @@
 set nocompatible              " be iMproved, required
 
+filetype indent plugin on
+
+" Highlight syntax in programming languages
+syntax on
+
+" Expand names that Makefiles may have, such as Makefile.rules or TEST.nightly.Makefile.
+augroup filetype
+  au! BufRead,BufNewFile *Makefile* set filetype=make
+augroup END
+
+" In Makefiles, don't expand tabs to spaces, since we need the actual tabs
+autocmd FileType make set noexpandtab
+
+" Delete trailing whitespace and tabs at the end of each line
+command! DeleteTrailingWs :%s/\s\+$//
+
+" Enable syntax highlighting for LLVM files. To use, copy utils/vim/llvm.vim to ~/.vim/syntax
+augroup filetype
+  au! BufRead,BufNewFile *.ll     set filetype=llvm
+augroup END
+
+" Enable syntax highlighting for tablegen files. To use, copy
+" utils/vim/tablegen.vim to ~/.vim/syntax .
+augroup filetype
+  au! BufRead,BufNewFile *.td     set filetype=tablegen
+augroup END
+
+" Enable syntax highlighting for reStructuredText files. To use, copy
+" rest.vim (http://www.vim.org/scripts/script.php?script_id=973)
+" to ~/.vim/syntax .
+augroup filetype
+ au! BufRead,BufNewFile *.rst     set filetype=rest
+augroup END
+
+augroup filetype
+ au! BufRead,BufNewFile *.sourceme     set filetype=sh
+augroup END
+
 " Rebinds k and j to count wrapped lines as new lines but still work with a motion in front
 nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
 nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
@@ -12,13 +50,14 @@ autocmd InsertEnter * let CursorColumnI = col('.')
 autocmd CursorMovedI * let CursorColumnI = col('.')
 autocmd InsertLeave * if col('.') != CursorColumnI | call cursor(0, col('.')+1) | endif
 
+" Don't open history with this
+nmap Q <Nop>
+
 " Remaps split navigation keys
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
-
-let mapleader = ","
 
 " Tab specific option
 set tabstop=4                  "A tab is 8 spaces
@@ -27,18 +66,44 @@ set softtabstop=4               "Insert 4 spaces when tab is pressed
 set shiftwidth=4                "An indent is 4 spaces
 set shiftround                  "Round indent to nearest shiftwidth multiple
 
+" Highlight trailing whitespace.
+highlight WhitespaceEOL ctermbg=DarkYellow guibg=DarkYellow
+if v:version >= 702
+
+  " Whitespace at the end of a line. This little dance suppresses
+  " whitespace that has just been typed.
+  au BufWinEnter * let w:m1=matchadd('WhitespaceEOL', '\s\+$', -1)
+  au InsertEnter * call matchdelete(w:m1)
+  au InsertEnter * let w:m2=matchadd('WhitespaceEOL', '\s\+\%#\@<!$', -1)
+  au InsertLeave * call matchdelete(w:m2)
+  au InsertLeave * let w:m1=matchadd('WhitespaceEOL', '\s\+$', -1)
+else
+  au BufRead,BufNewFile * syntax match LongLine /\%>80v.\+/
+  au InsertEnter * syntax match WhitespaceEOL /\s\+\%#\@<!$/
+  au InsertLeave * syntax match WhitespaceEOL /\s\+$/
+endif
+
+let mapleader = ","
+
 set pastetoggle=<F2>
 
 set incsearch		" find the next match as we type the search
-set ignorecase		" set search to be case insensitive 
+set ignorecase		" set search to be case insensitive
 set smartcase		" unless you typed uppercase letters in your query"
 set autoindent		" For autoindenting after a newline
-set showcmd			" Shows what you are typing as a command
-set mouse=a			" Enable mouse in terminal
-set number			" Numbered lines
-set scrolloff=5		" No longer need to place cursor att bottom to scroll
+set showcmd		" Shows what you are typing as a command
+set mouse=a		" Enable mouse in terminal
+set number		" Numbered lines
+
+set tags=./tags; " Look for tags files upwards recursively
+set hlsearch    " Hightlight search matches
 
 call plug#begin('~/.vim/plugged')
+Plug 'lyuts/vim-rtags'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-endwise'
+Plug 'rstacruz/vim-closer'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
